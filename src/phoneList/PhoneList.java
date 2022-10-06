@@ -1,7 +1,8 @@
 package phoneList;
 
+import java.util.ArrayList;
 import java.util.Scanner;
-
+import java.util.Scanner;
 /*
  * Phone List
  * 
@@ -29,12 +30,13 @@ public class PhoneList {
 	/*
 	 * Instance Variables
 	 */
-	
+	private ArrayList<Contact> contacts;
 	
 	
 	//Constructor
 	public PhoneList() {
 		//initialize instance variables
+	contacts = new ArrayList<Contact>();
 	}
 	
 	
@@ -50,8 +52,25 @@ public class PhoneList {
 	 *        it's been added
 	 */
 	public void addContact() {
-		
-		
+		Scanner inkey = new Scanner (System.in);
+		System.out.println("New contact's name: ");
+		String name = inkey.nextLine();
+		System.out.println("New contact's number: ");
+		String number = inkey.nextLine();
+		Contact newContact = new Contact(name, number);
+		System.out.print("New contact " + newContact.getName() + " has been added");
+		contacts.add(newContact);
+		for (int i = 0; i < contacts.size(); i++) {
+			for (int j = i + 1; j < contacts.size(); j++) {
+				int val = contacts.get(i).getName().compareToIgnoreCase(contacts.get(j).getName());				
+				if (val > 0) {
+					Contact holder1 = contacts.get(i);
+					Contact holder2 = contacts.get(j);
+					contacts.set(i, holder2);
+					contacts.set(j, holder1);
+				}
+			}
+		}
 	}
 	
 	
@@ -71,7 +90,25 @@ public class PhoneList {
 	 *        
 	 */
 	public void removeContact() {
-		
+		Scanner inKey = new Scanner(System.in);
+		System.out.println("Contact name: ");
+		String remove = inKey.nextLine();
+		Boolean isContact = false;
+		for (int i = 0; i < contacts.size(); i++) {
+			
+			if(remove.equalsIgnoreCase(contacts.get(i).getName())) {
+				System.out.println(contacts.get(i));
+				System.out.println("Contact has been removed");
+				contacts.remove(i);
+				isContact = true;
+				break;
+			}
+			
+			if (isContact == false) {
+				System.out.println("Contact not found");
+
+			}
+		}
 		
 	}
 	
@@ -88,7 +125,15 @@ public class PhoneList {
 	 *          #################
 	 */
 	public void printList() {
+		System.out.println("-------------------------");
 		
+
+		for (int i = 0; i < contacts.size(); i++) {
+
+		System.out.println(contacts.get(i) + "\n"); 
+		}
+		System.out.println("-------------------------");
+
 	}
 
 	
